@@ -1,0 +1,16 @@
+{% extends 'service_function/base.html' %}
+
+{% block content %}
+    <div>
+        <h3> List of Transports </h3>
+        <ul>{% for transport in transports %}
+            <br>
+                {% if transport.waybill is not None %}
+                    Train code | {{ transport.code_name }} | <mark>Waybill</mark>  {{ transport.waybill }} | Time In Road - {{ transport.road_time }} minutes
+                {% else %}
+                    Train code | {{ transport.code_name }} | Time In Road - {{ transport.road_time }} minutes
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

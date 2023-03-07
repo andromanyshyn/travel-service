@@ -1,0 +1,13 @@
+{% extends 'service_function/base.html' %}
+
+{% block content %}
+    <h2> List of Localizations </h2> <br>
+    <ul>
+        {% for localization in localizations %}
+        <div>
+            <p class="text-center">
+            <h5>{{ localization }}</h5></p>
+        </div>
+        {% endfor %}
+    </ul>
+{% endblock %}

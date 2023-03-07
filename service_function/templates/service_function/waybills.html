@@ -1,0 +1,10 @@
+{% extends 'service_function/base.html' %}
+
+{% block content %}
+    <h2> List of Waybills </h2> <br>
+    {% for waybill in waybills %}
+        <div>
+            <ul><p class="text-center"><h5>{{ waybill }}</h5></p></ul>
+        </div>
+    {% endfor %}
+{% endblock %}

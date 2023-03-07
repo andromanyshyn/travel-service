@@ -1,0 +1,32 @@
+{% extends 'service_function/base.html' %}
+
+
+<!-- Page content-->
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <br>
+    {{ form.as_p }}
+    <div class="form-row">
+        <div class="col-lg-12" style="margin-top: 33px;">
+            <input class="btn btn-info btn-block" type="submit" value="Find Waybills">
+        </div>
+    </div>
+</form>
+<div>
+    {% if waybills %}
+        <br>
+    <h5>Waybills for you :</h5>
+        {% for waybill in waybills %}
+            <br>
+            <ul><li><mark>{{ waybill }}</mark> | {{ waybill.max_road_time }} minutes in road </li></ul>
+            Available Transports : <br> <br>
+            <div>
+                {% for transport in waybill.transport_set.all %}
+                    {{ transport.code_name }} | <mark>{{ transport.waybill }}</mark> | {{ transport.road_time }} minutes in road
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
