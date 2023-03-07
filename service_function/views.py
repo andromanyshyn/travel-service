@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+import uuid
+from django.contrib import messages
 
 from .forms import *
 from .models import *
@@ -12,8 +14,12 @@ def index(request):
         form = FindWaybillForm(request.POST)
         start_point = int(request.POST['start_point'])
         end_point = int(request.POST['end_point'])
-        waybills = Waybills.objects.filter(start_point=start_point, end_point=end_point).order_by('max_road_time')
-        return render(request, 'service_function/index.html', context={'form': form, 'waybills': waybills})
+        max_road_time = int(request.POST['max_road_time'])
+        waybills = Waybills.objects.filter(start_point=start_point, end_point=end_point, max_road_time__lte=max_road_time).order_by('max_road_time')
+        if waybills:
+            return render(request, 'service_function/index.html', context={'form': form, 'waybills': waybills})
+        else:
+            messages.error(request, 'The travel time is longer than the one you selected. Change the time')
     else:
         form = FindWaybillForm()
     return render(request, 'service_function/index.html', context={'form': form})
@@ -40,23 +46,21 @@ class AllTransportView(ListView):
     context_object_name = 'transports'
 
 
-class AddTransportView(CreateView):
-    template_name = 'service_function/add_transport.html'
-    form_class = TransportCreateForm
-    context_object_name = 'transports'
-
-    def get_success_url(self):
-        success_url = reverse('transports')
-        return success_url
-
-    def post(self, request, *args, **kwargs):
+def AddTransport(request):
+    if request.method == 'POST':
         waybill_id = int(request.POST['waybill'])
         road_time = int(request.POST['road_time'])
+        code_name = str(request.POST['code_name'])
         waybill = Waybills.objects.get(id=waybill_id)
         for transport in Transport.objects.all():
             if transport.waybill == waybill and transport.road_time == road_time:
                 return HttpResponse('Error please choose another road time')
-        return super().post(request, *args, **kwargs)
+        Transport.objects.create(code_name=code_name, waybill=waybill, road_time=road_time)
+        return render(request, 'service_function/transports.html', context={'transports': Transport.objects.all()})
+    else:
+        print(request)
+        form = TransportCreateForm(initial={'code_name': uuid.uuid4()})
+    return render(request, 'service_function/add_transport.html', context={'form': form})
 
 
 class AddWaybillView(CreateView):

@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('add_localization/', views.AddLocalizationView.as_view(), name='add_localization'),
-    path('add_transport/', views.AddTransportView.as_view(), name='add_transport'),
+    path('add_transport/', views.AddTransport, name='add_transport'),
     path('add_waybill/', views.AddWaybillView.as_view(), name='add_waybill'),
 
     path('localizations/', views.AllLocalizationsView.as_view(), name='localizations'),

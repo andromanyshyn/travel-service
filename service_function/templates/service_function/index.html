@@ -14,6 +14,16 @@
     </div>
 </form>
 <div>
+    {% if messages %}
+        <ul class="messages">
+            <br>
+            {% for message in messages %}
+                <li>{% if message.tags %} "<mark>{{ message.tags.upper }}</mark>"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+<div>
     {% if waybills %}
         <br>
     <h5>Waybills for you :</h5>
@@ -23,7 +33,11 @@
             Available Transports : <br> <br>
             <div>
                 {% for transport in waybill.transport_set.all %}
-                    {{ transport.code_name }} | <mark>{{ transport.waybill }}</mark> | {{ transport.road_time }} minutes in road
+                    <ul>Train number | {{ transport.code_name }} |
+                        <mark>{{ transport.waybill }}</mark>
+                        | {{ transport.road_time }} minutes in road
+                        <hr>
+                    </ul>
                 {% endfor %}
             </div>
         {% endfor %}
