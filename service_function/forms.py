@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import *
 
 
@@ -24,3 +25,9 @@ class WaybillCreateForm(forms.ModelForm):
     class Meta:
         model = Waybills
         fields = ['start_point', 'end_point', 'max_road_time']
+
+
+class SaveWaybillForm(forms.ModelForm):
+    class Meta:
+        model = SavedWaybills
+        fields = ['name']
