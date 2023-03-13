@@ -3,7 +3,7 @@ import uuid
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import *
 from .models import *
@@ -12,7 +12,6 @@ from .models import *
 def index(request):
     if request.method == 'POST':
         form = FindWaybillForm(request.POST)
-        # if 'name' not in request.POST:
         start_point = int(request.POST['start_point'])
         end_point = int(request.POST['end_point'])
         max_road_time = int(request.POST['max_road_time'])
@@ -27,10 +26,6 @@ def index(request):
                           context={'form': form, 'waybills': waybills, 'form2': SaveWaybillForm(request.POST)})
         else:
             messages.error(request, 'The travel time is longer than the one you selected. Change the time')
-        # elif 'name' in request.POST:
-        #     name = request.POST['name']
-        #     SavedWaybills.objects.create(name=name)
-        #     return redirect(reverse('index'))
     else:
         form = FindWaybillForm()
     return render(request, 'service_function/index.html', context={'form': form})
@@ -49,6 +44,13 @@ class AllLocalizationsView(ListView):
     template_name = 'service_function/localizations.html'
     model = Localization
     context_object_name = 'localizations'
+
+
+class UpdateLocalization(UpdateView):
+    model = Localization
+    template_name = 'service_function/update_localization.html'
+    form_class = LocalizationCreateForm
+    success_url = reverse_lazy('localizations')
 
 
 class AllTransportView(ListView):

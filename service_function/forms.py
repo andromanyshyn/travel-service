@@ -15,6 +15,12 @@ class LocalizationCreateForm(forms.ModelForm):
         fields = ['name']
 
 
+# class LocalizationUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Localization
+#         fields = ['name']
+
+
 class TransportCreateForm(forms.ModelForm):
     class Meta:
         model = Transport
