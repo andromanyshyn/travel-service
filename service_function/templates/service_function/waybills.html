@@ -1,10 +1,24 @@
 {% extends 'service_function/base.html' %}
 
 {% block content %}
-    <h2> List of Waybills </h2> <br>
-    {% for waybill in waybills %}
-        <div>
-            <ul><p class="text-center"><h5><li>{{ waybill }}</li></h5></p></ul>
-        </div>
-    {% endfor %}
+<h3> List of Waybills </h3> <br>
+{% for waybill in waybills %}
+<div>
+    <ul><p class="text-center">
+        <h5>
+            <li>
+                <mark>{{ waybill }} <a href="{% url 'delete_waybill' waybill.pk %}">
+                    <button type="button" class="btn btn-primary btn-sm">Delete</button>
+                </a></mark>
+                {% if waybill.towns.all %}
+                    The route passes through cities:
+                    {% for town in waybill.towns.all %}
+                        {{ town }}
+                    {% endfor %}
+                {% endif %}
+            </li>
+        </h5>
+        </p></ul>
+</div>
+{% endfor %}
 {% endblock %}

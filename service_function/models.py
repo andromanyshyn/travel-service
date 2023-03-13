@@ -1,4 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.contrib import messages
 
 
 class Localization(models.Model):
@@ -6,6 +8,8 @@ class Localization(models.Model):
 
     class Meta:
         verbose_name_plural = 'Localizations'
+
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -19,6 +23,16 @@ class Transport(models.Model):
     class Meta:
         verbose_name_plural = 'Transports'
 
+    # def clean(self):
+    #     transport = Transport.objects.filter(waybill=self.waybill,
+    #                                          road_time=self.road_time)
+    #     if transport:
+    #         raise ValidationError
+    #
+    # def save(self, *args, **kwargs):
+    #     self.clean()
+    #     return super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.code_name)
 
@@ -27,10 +41,21 @@ class Waybills(models.Model):
     start_point = models.ForeignKey(to=Localization, related_name='start_point', on_delete=models.CASCADE)
     end_point = models.ForeignKey(to=Localization, related_name='end_point', on_delete=models.CASCADE)
     max_road_time = models.PositiveIntegerField(null=True)
-    list_of_transport = models.ManyToManyField(to=Transport, related_name='transports')
+    towns = models.ManyToManyField(to=Localization, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Waybils'
+        ordering = ['max_road_time']
 
     class Meta:
         verbose_name_plural = 'Waybils'
 
     def __str__(self):
-        return f'{self.start_point} - {self.end_point}'
+        return f'{self.start_point} - {self.end_point} | {self.max_road_time} minutes road'
+
+
+class SavedWaybills(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name

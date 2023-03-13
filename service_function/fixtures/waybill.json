@@ -1,0 +1,20 @@
+[
+  {
+    "model": "service_function.waybills",
+    "pk": 1,
+    "fields": {
+      "start_point": 1,
+      "end_point": 2,
+      "max_road_time": 40
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 2,
+    "fields": {
+      "start_point": 3,
+      "end_point": 4,
+      "max_road_time": 50
+    }
+  }
+]

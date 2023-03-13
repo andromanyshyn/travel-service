@@ -1,12 +1,18 @@
 {% extends 'service_function/base.html' %}
 
 {% block content %}
-    <h2> List of Localizations </h2> <br>
+    <h3> List of Localizations </h3> <br>
     <ul>
         {% for localization in localizations %}
         <div>
             <p class="text-center">
-            <h5><li>{{ localization }}</li></h5></p>
+
+            <h5><li>{{ localization }} {% if user.is_authenticated %}
+            <a href="{% url 'delete_localization' localization.pk %}">
+                <button type="button" class="btn btn-primary btn-sm">Delete</button></a>
+            <a href="{% url 'update_localization' localization.pk %}">
+                <button type="button" class="btn btn-primary btn-sm">update</button>
+            </a>{% endif %}</li></h5></p>
         </div>
         {% endfor %}
     </ul>

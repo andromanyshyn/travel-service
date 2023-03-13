@@ -6,7 +6,22 @@
 <form method="post">
     {% csrf_token %}
     <br>
-    {{ form.as_p }}
+    <div class="form-group">
+        <label class="small mb-1" for="{{ form.start_point.id_for_label }}">Start
+            Point</label>
+        {{ form.start_point }}
+    </div>
+    <div class="form-group">
+        <label class="small mb-1" for="{{ form.end_point.id_for_label }}">End
+            Point</label>
+        {{ form.end_point }}
+    </div>
+    <div class="form-group">
+        <label class="small mb-1" for="{{ form.max_road_time.id_for_label }}">Max
+            Travel Time</label>
+        {{ form.max_road_time }}
+    </div>
+    {{ form.as_p}}
     <div class="form-row">
         <div class="col-lg-12" style="margin-top: 33px;">
             <input class="btn btn-info btn-block" type="submit" value="Find Waybills">
@@ -29,16 +44,21 @@
     <h5>Waybills for you :</h5>
         {% for waybill in waybills %}
             <br>
-            <ul><li><mark>{{ waybill }}</mark> | {{ waybill.max_road_time }} minutes in road </li></ul>
-            Available Transports : <br> <br>
+            <ul><li><mark>{{ waybill }}</mark></li></ul>
             <div>
-                {% for transport in waybill.transport_set.all %}
-                    <ul>Train number | {{ transport.code_name }} |
-                        <mark>{{ transport.waybill }}</mark>
-                        | {{ transport.road_time }} minutes in road
-                        <hr>
-                    </ul>
-                {% endfor %}
+                {% if waybill.transport_set.all %}
+                <h5>Available Transports :</h5>
+                    {% for transport in waybill.transport_set.all %}
+                        <ul>Train number | {{ transport.code_name }} |
+                            <mark>{{ transport.waybill.start_point }} - {{ transport.waybill.end_point }}</mark>
+                            | {{ transport.road_time }} minutes in road
+                            <hr>
+                        </ul>
+                    {% endfor %}
+                {% else %}
+                    <h5> Available Transports : There are no available transport for this waybill </h5>
+                {% endif %}
+
             </div>
         {% endfor %}
     {% endif %}

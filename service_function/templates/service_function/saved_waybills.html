@@ -1,0 +1,11 @@
+{% extends 'service_function/base.html' %}
+
+{% block content %}
+    {% for waybill in savedwaybills %}
+        <div>
+            <ul>
+                {{ waybill }}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

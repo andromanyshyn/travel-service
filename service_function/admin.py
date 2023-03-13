@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import *
 
+from .models import *
+
 
 @admin.register(Localization)
 class LocalizationAdmin(admin.ModelAdmin):
@@ -9,7 +11,7 @@ class LocalizationAdmin(admin.ModelAdmin):
 
 @admin.register(Transport)
 class TransportAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['code_name', 'waybill', 'road_time']
 
 
 @admin.register(Waybills)
