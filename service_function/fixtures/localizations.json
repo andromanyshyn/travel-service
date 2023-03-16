@@ -1,0 +1,93 @@
+[
+  {
+    "model": "service_function.localization",
+    "pk": 1,
+    "fields": {
+      "name": "Kalush"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 2,
+    "fields": {
+      "name": "Ivano-Frankivsk"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 3,
+    "fields": {
+      "name": "Kiev"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 4,
+    "fields": {
+      "name": "Lytsk"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 5,
+    "fields": {
+      "name": "Zhytomyr"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 6,
+    "fields": {
+      "name": "Odessa"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 7,
+    "fields": {
+      "name": "Warsaw"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 8,
+    "fields": {
+      "name": "Bangkok"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 9,
+    "fields": {
+      "name": "Los Angeles"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 10,
+    "fields": {
+      "name": "London"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 11,
+    "fields": {
+      "name": "Paris"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 12,
+    "fields": {
+      "name": "Chicago"
+    }
+  },
+  {
+    "model": "service_function.localization",
+    "pk": 13,
+    "fields": {
+      "name": "Toronto"
+    }
+  }
+]

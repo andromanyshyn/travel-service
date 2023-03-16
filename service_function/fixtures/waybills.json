@@ -1,0 +1,98 @@
+[
+  {
+    "model": "service_function.waybills",
+    "pk": 1,
+    "fields": {
+      "start_point": 1,
+      "end_point": 2,
+      "max_road_time": 40,
+      "towns": []
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 2,
+    "fields": {
+      "start_point": 3,
+      "end_point": 4,
+      "max_road_time": 50,
+      "towns": []
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 4,
+    "fields": {
+      "start_point": 2,
+      "end_point": 3,
+      "max_road_time": 40,
+      "towns": []
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 7,
+    "fields": {
+      "start_point": 5,
+      "end_point": 6,
+      "max_road_time": 50,
+      "towns": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 8,
+    "fields": {
+      "start_point": 8,
+      "end_point": 9,
+      "max_road_time": 250,
+      "towns": [
+        10
+      ]
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 9,
+    "fields": {
+      "start_point": 7,
+      "end_point": 3,
+      "max_road_time": 200,
+      "towns": []
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 10,
+    "fields": {
+      "start_point": 12,
+      "end_point": 10,
+      "max_road_time": 44,
+      "towns": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 11,
+    "fields": {
+      "start_point": 11,
+      "end_point": 7,
+      "max_road_time": 100,
+      "towns": []
+    }
+  },
+  {
+    "model": "service_function.waybills",
+    "pk": 13,
+    "fields": {
+      "start_point": 2,
+      "end_point": 10,
+      "max_road_time": 55,
+      "towns": []
+    }
+  }
+]

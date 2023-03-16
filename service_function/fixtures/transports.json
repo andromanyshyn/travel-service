@@ -1,0 +1,65 @@
+[
+  {
+    "model": "service_function.transport",
+    "pk": 1,
+    "fields": {
+      "code_name": "c8b3a83d-d8e5-4d0d-92f5-43f8afd8acf8",
+      "waybill": 1,
+      "road_time": 41
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 2,
+    "fields": {
+      "code_name": "a7ff5624-d674-469c-857e-2d5f0019aad3",
+      "waybill": 2,
+      "road_time": 47
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 3,
+    "fields": {
+      "code_name": "6da94edf-82ab-4899-86cd-7f463847c127",
+      "waybill": 7,
+      "road_time": 55
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 6,
+    "fields": {
+      "code_name": "2f521a0c-c860-45d1-bc50-1a1684ecc56b",
+      "waybill": 9,
+      "road_time": 205
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 7,
+    "fields": {
+      "code_name": "86ce3f08-7b70-4bf6-b1af-c6122c7192f5",
+      "waybill": 11,
+      "road_time": 105
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 8,
+    "fields": {
+      "code_name": "1397b83a-9854-495d-b8a0-a4e55a647250",
+      "waybill": 13,
+      "road_time": 57
+    }
+  },
+  {
+    "model": "service_function.transport",
+    "pk": 9,
+    "fields": {
+      "code_name": "5ba65607-332d-49c9-b163-c1498736eaa9",
+      "waybill": 8,
+      "road_time": 247
+    }
+  }
+]

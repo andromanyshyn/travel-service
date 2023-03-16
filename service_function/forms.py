@@ -3,12 +3,6 @@ from django import forms
 from .models import *
 
 
-class FindWaybillForm(forms.ModelForm):
-    class Meta:
-        model = Waybills
-        fields = ['start_point', 'end_point', 'max_road_time', 'towns']
-
-
 class LocalizationCreateForm(forms.ModelForm):
     class Meta:
         model = Localization
@@ -23,7 +17,10 @@ class TransportCreateForm(forms.ModelForm):
 
 class WaybillCreateForm(forms.ModelForm):
     towns = forms.ModelMultipleChoiceField(queryset=Localization.objects.all(),
-                                           widget=forms.SelectMultiple, required=False)
+                                           required=False,
+                                           widget=forms.SelectMultiple(attrs={
+                                               'class': 'js-example-basic-multiple'
+                                           }))
 
     class Meta:
         model = Waybills

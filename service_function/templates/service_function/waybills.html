@@ -1,24 +1,51 @@
 {% extends 'service_function/base.html' %}
 
 {% block content %}
-<h3> List of Waybills </h3> <br>
-{% for waybill in waybills %}
-<div>
-    <ul><p class="text-center">
-        <h5>
-            <li>
-                <mark>{{ waybill }} <a href="{% url 'delete_waybill' waybill.pk %}">
+<h3 align="center" style="color:Black">List of Waybills</h3>
+<br>
+<div class="parent-div">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">From City</th>
+            <th scope="col">To City</th>
+            <th scope="col">Travel Time</th>
+            <th scope="col">Through Cities </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for waybill in waybills %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ waybill.start_point }}</td>
+            <td>{{ waybill.end_point }}</td>
+            <td>{{ waybill.max_road_time }} min</td>
+            <td>
+            {% for town in waybill.towns.all %}
+                <p>{{ town }}</p>
+            {% endfor %}
+            </td>
+            {% if user.is_authenticated %}
+            <td>
+                <a href="{% url 'delete_waybill' waybill.pk %}">
                     <button type="button" class="btn btn-primary btn-sm">Delete</button>
-                </a></mark>
-                {% if waybill.towns.all %}
-                    The route passes through cities:
-                    {% for town in waybill.towns.all %}
-                        {{ town }}
-                    {% endfor %}
-                {% endif %}
-            </li>
-        </h5>
-        </p></ul>
+                </a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
-{% endfor %}
+<br><br>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }} {% else %} # {% endif %} ">Previous</a></li>
+          {% for num in page_obj.paginator.page_range %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+          {% endfor %}
+          <li class="page-item"><a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% else %} # {% endif %}">Next</a></li>
+      </ul>
+    </nav>
 {% endblock %}

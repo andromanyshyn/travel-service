@@ -1,8 +1,3 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.urls import reverse
-import uuid
-from django.contrib import messages
 import uuid
 
 from django.contrib import messages
@@ -17,21 +12,32 @@ from .models import *
 def index(request):
     if request.method == 'POST':
         form = WaybillCreateForm(request.POST)
-        start_point = int(request.POST['start_point'])
-        end_point = int(request.POST['end_point'])
-        max_road_time = int(request.POST['max_road_time'])
+        if form.is_valid():
+            start_point = int(request.POST['start_point'])
+            end_point = int(request.POST['end_point'])
+            max_road_time = int(request.POST['max_road_time'])
+            if form.cleaned_data['towns']:
+                waybills = Waybills.objects.filter(start_point=start_point, end_point=end_point,
+                                                   max_road_time__lte=max_road_time).order_by('max_road_time')
+                for waybill in waybills:
+                    if list(form.cleaned_data['towns']) == list(waybill.towns.all()):
+                        return render(request, 'service_function/index.html',
+                                      context={'form': form, 'waybills': waybills})
+                    else:
+                        messages.error(request, 'The route will not go through towns that you picked')
+                        return redirect(reverse('index'))
 
-        waybills = Waybills.objects.filter(start_point=start_point, end_point=end_point,
-                                           max_road_time__lte=max_road_time).order_by('max_road_time')
+            waybills = Waybills.objects.filter(start_point=start_point, end_point=end_point,
+                                               max_road_time__lte=max_road_time).order_by('max_road_time')
 
-        waybill_start_end_points = Waybills.objects.filter(start_point=start_point, end_point=end_point)
-        if not waybill_start_end_points:
-            messages.error(request, 'There is no waybill satisfying the search')
-            return redirect(reverse('index'))
-        if waybills:
-            return render(request, 'service_function/index.html', context={'form': form, 'waybills': waybills})
-        else:
-            messages.error(request, 'The travel time is longer than the one you selected. Change the time')
+            waybill_start_end_points = Waybills.objects.filter(start_point=start_point, end_point=end_point)
+            if not waybill_start_end_points:
+                messages.error(request, 'There is no waybill satisfying the search')
+                return redirect(reverse('index'))
+            if waybills:
+                return render(request, 'service_function/index.html', context={'form': form, 'waybills': waybills})
+            else:
+                messages.error(request, 'The travel time is longer than the one you selected. Change the time')
     else:
         form = WaybillCreateForm()
     return render(request, 'service_function/index.html', context={'form': form})
@@ -49,12 +55,14 @@ class AddLocalizationView(CreateView):
 class AllLocalizationsView(ListView):
     template_name = 'service_function/localizations.html'
     model = Localization
+    paginate_by = 5
     context_object_name = 'localizations'
 
 
 class AllTransportView(ListView):
     template_name = 'service_function/transports.html'
     model = Transport
+    paginate_by = 5
     context_object_name = 'transports'
 
 
@@ -77,37 +85,38 @@ def AddTransport(request):
     return render(request, 'service_function/add_transport.html', context={'form': form})
 
 
-class AddWaybillView(CreateView):
-    template_name = 'service_function/add_waybill.html'
-    form_class = WaybillCreateForm
-
-    def get_success_url(self):
-        success_url = reverse('waybills')
-        return success_url
+def add_waybill(request):
+    if request.method == 'POST':
+        form = WaybillCreateForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            if data['start_point'] == data['end_point']:
+                messages.error(request, 'There is no waybill satisfying the search')
+                return redirect(reverse('add_waybill'))
+            else:
+                form.save()
+    else:
+        form = WaybillCreateForm()
+    return render(request, 'service_function/add_waybill.html', context={'form': form})
 
 
 class WaybillsList(ListView):
     template_name = 'service_function/waybills.html'
     model = Waybills
+    paginate_by = 5
     context_object_name = 'waybills'
-
-
-class AllSavedWaybillsList(ListView):
-    template_name = 'service_function/saved_waybills.html'
-    model = SavedWaybills
-    context_object_name = 'savedwaybills'
 
 
 def delete_localization(request, id_localization):
     localization = Localization.objects.get(id=id_localization)
     localization.delete()
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect(reverse('localizations'))
 
 
 def delete_transport(request, id_transport):
     transport = Transport.objects.get(id=id_transport)
     transport.delete()
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect(reverse('transports'))
 
 
 def delete_waybill(request, id_waybill):

@@ -1,6 +1,6 @@
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib import messages
 
 
 class Localization(models.Model):
@@ -22,16 +22,7 @@ class Transport(models.Model):
 
     class Meta:
         verbose_name_plural = 'Transports'
-
-    # def clean(self):
-    #     transport = Transport.objects.filter(waybill=self.waybill,
-    #                                          road_time=self.road_time)
-    #     if transport:
-    #         raise ValidationError
-    #
-    # def save(self, *args, **kwargs):
-    #     self.clean()
-    #     return super().save(*args, **kwargs)
+        ordering = ['road_time']
 
     def __str__(self):
         return str(self.code_name)

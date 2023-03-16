@@ -11,4 +11,14 @@
         </div>
     </div>
 </form>
+<div>
+    {% if messages %}
+        <ul class="messages">
+            <br>
+            {% for message in messages %}
+                <li>{% if message.tags %} "<mark>{{ message.tags.upper }}</mark>"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
 {% endblock %}
